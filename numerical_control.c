@@ -52,6 +52,9 @@ void initiate_movement(char *control){
         case 3:
             rotate_right_control();
             break;
+        case 4:
+            stop_control();
+            break;
     }
 }
 
