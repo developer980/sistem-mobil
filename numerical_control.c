@@ -1,5 +1,6 @@
 #include "msp.h"
 #include "driverlib.h"
+#include "gpio.h"
 #include <string.h> // For strcpy, strlen
 #include <stdlib.h> // For malloc, free
 
@@ -13,31 +14,25 @@ char *remove_first_character(char *control){
     return control + 1;
 }
 
-void process_controls(char string[6]){
-    const char com[1] = string[0];
-    switch (atoi(com)){
-        case 0:
-            printf("do nothing");
-            break;
-        case 1:
-            printf("move");
-            initiate_movement(remove_first_character(string));
-            break;
-        case 9:
-            printf("solar charge control");
-            break;
-        case 3:
-            printf("vehicle charge control");
-            break;
-    }
-}
-
 void initiate_movement(char *control){
-//    char *speed = remove_first_character(remove_first_character(control);
-    char com[1] = control[0];
+    char *speed = remove_first_character(remove_first_character(control));
 
-//    MAP_Timer_A_setCompareValue(TIMER_A0_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_1, atoi(speed) * 100);
-//    MAP_Timer_A_outputPWM(TIMER_A0_BASE, &pwmConfig);
+    int speed_code = atoi(speed);
+    int speed_value = speed_code * 30 + 3000;
+
+//    pwmConfigLeft.dutyCycle = speed_value;
+//    pwmConfigRight.dutyCycle = speed_value;
+//
+//    Timer_A_generatePWM(TIMER_A0_BASE, &pwmConfigLeft);
+//    Timer_A_generatePWM(TIMER_A0_BASE, &pwmConfigRight);
+    Timer_A_setCompareValue(TIMER_A0_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_3, speed_value);
+    Timer_A_setCompareValue(TIMER_A0_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_4, speed_value);
+
+
+
+    char com[1] = control[0];
+    //printf("speed: %d \n", speed_value);
+
 
     switch (atoi(com)){
         case 0:
@@ -57,6 +52,40 @@ void initiate_movement(char *control){
             break;
     }
 }
+
+void initiate_vehicle_charge_control(char *control){
+    char *charge_control_char = remove_first_character(remove_first_character(control));
+    int charge_control_code = atoi(charge_control_char);
+
+    if (charge_control_code == 0){
+        stop_vehicle_charging();
+    }
+
+    if(charge_control_code == 1){
+        start_vehicle_charging();
+    }
+}
+
+void process_controls(char string[6]){
+    const char com[1] = string[0];
+    switch (atoi(com)){
+        case 0:
+//            printf("do nothing");
+            break;
+        case 1:
+//            printf("move");
+            initiate_movement(remove_first_character(string));
+            break;
+        case 2:
+            initiate_vehicle_charge_control(remove_first_character(string));
+            break;
+        case 3:
+//            printf("vehicle charge control");
+            break;
+    }
+}
+
+
 
 
 

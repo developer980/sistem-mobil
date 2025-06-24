@@ -6,6 +6,7 @@
 
 #include "msp.h"
 #include "driverlib.h"
+#include <adc14.h>
 //#include "nrf24l01.h"
 
 const int max_period = 1000;
@@ -17,6 +18,8 @@ uint8_t ascending_number = 0X01;
 char dataString[6];
 volatile uint8_t dataIndex = 0;
 volatile uint8_t messageReceived = 0;
+//volatile uint8_t adc_conversion_complete = 0;
+//volatile uint8_t adc_conversion_result = 0;
 uint8_t property[4];
 int receivedInteger;
 
@@ -63,33 +66,49 @@ void EUSCIA0_IRQHandler(void){
 }
 
 
+//void ADC14_IRQHandler(void) {
+//    uint64_t status;
+//
+//    // Get the interrupt status to determine which flag caused the interrupt
+//    status = ADC14_getEnabledInterruptStatus();
+//    ADC14_clearInterruptFlag(status); // Clear the triggered interrupt flag(s)
+//
+//    // Check if the ADC_INT0 (for ADC_MEM0) interrupt occurred
+//    if (status & ADC_INT0) {
+//        adc_conversion_result = ADC14_getResult(ADC_MEM0); // Read the conversion result
+//        adc_conversion_complete = 1; // Set flag to notify main loop
+//    }
+//
+//    // If you had other ADC interrupts enabled (e.g., ADC_INT1 for ADC_MEM1), you'd handle them here too
+//}
 
-void TA0_0_IRQHandler(void)
-{
-    // Clear the interrupt flag
-    TIMER_A0->CCTL[0] &= ~TIMER_A_CCTLN_CCIFG;
-    // Your Timer A0 interrupt logic here
-}
+
+
+//void TA0_0_IRQHandler(void)
+//{
+//    // Clear the interrupt flag
+//    TIMER_A0->CCTL[0] &= ~TIMER_A_CCTLN_CCIFG;
+//}
 
 void main(void)
 {
 
     WDT_A_hold(WDT_A_BASE);  // Stop watchdog timer
 
-    init_io();
+
 
      //Configure Timer_A0
-    NVIC->ISER[0] = 1 << ((TA0_0_IRQn) & 31);
-
-
-    // Configure PORT1_IRQ
-//    NVIC->ISER[1] = 1 << ((PORT1_IRQn) & 31);
-    NVIC_EnableIRQ(PORT1_IRQn);
-    TIMER_A0->CCTL[0] &= ~TIMER_A_CCTLN_CCIFG;
-    TIMER_A0->CCTL[0] = TIMER_A_CCTLN_CCIE; // TACCR0 interrupt enabled
-    TIMER_A0->CCR[0] = max_period; // period value
-    TIMER_A0->CTL = TIMER_A_CTL_SSEL__SMCLK | TIMER_A_CTL_MC__UP;
-    __enable_irq();  // Enable global interrupts
+//    NVIC->ISER[0] = 1 << ((TA0_0_IRQn) & 31);
+//
+//
+//    // Configure PORT1_IRQ
+////    NVIC->ISER[1] = 1 << ((PORT1_IRQn) & 31);
+//    NVIC_EnableIRQ(PORT1_IRQn);
+//    TIMER_A0->CCTL[0] &= ~TIMER_A_CCTLN_CCIFG;
+//    TIMER_A0->CCTL[0] = TIMER_A_CCTLN_CCIE; // TACCR0 interrupt enabled
+//    TIMER_A0->CCR[0] = max_period; // period value
+//    TIMER_A0->CTL = TIMER_A_CTL_SSEL__SMCLK | TIMER_A_CTL_MC__UP;
+//    __enable_irq();  // Enable global interrupts
 
 
     // configure  PWM
@@ -97,6 +116,10 @@ void main(void)
 //    pwm(500);
 //    pwm1(0);
 
+
+    init_io();
+    init_PWM_pins();
+    init_analog_pins();
 
     // Set DCO frequency to 12MHz
     CS_setDCOFrequency(12000000);
@@ -113,7 +136,7 @@ void main(void)
     eUSCI_UART_Config uartConfig = {
         EUSCI_A_UART_CLOCKSOURCE_SMCLK,     // SMCLK Clock Source
         78,                                   //(9600 baud @12MHz)
-        2,                                   // UCxBRF = 8
+        2,                                   // UCxBRF = 2
         0x20,                                // UCxBRS = 0x20
         EUSCI_A_UART_NO_PARITY,              // No Parity
         EUSCI_A_UART_LSB_FIRST,              // LSB First
@@ -136,14 +159,24 @@ void main(void)
 
 
 
+
     while(1){
 
+//        MAP_Timer_A_generatePWM(TIMER_A0_BASE, &pwmConfig);
+//        GPIO_setOutputLowOnPin(GPIO_PORT_P3, GPIO_PIN2);
+//        GPIO_setOutputHighOnPin(GPIO_PORT_P3, GPIO_PIN3);
+//        GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN1);
+//        GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN3);
         if(messageReceived == 1){
-             printf("Received message: %s \n", dataString);
+             //printf("Received message: %s \n", dataString);
              process_controls(dataString);
              messageReceived = 0;
              dataString[0] = '\0';
          }
+
+//        if(adc_conversion_complete == 1){
+//            printf("analog value %d", adc_conversion_result);
+//        }
     }
 }
 
