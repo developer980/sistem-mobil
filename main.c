@@ -119,7 +119,7 @@ void main(void)
 
     init_io();
     init_PWM_pins();
-    init_analog_pins();
+//    init_analog_pins();
 
     // Set DCO frequency to 12MHz
     CS_setDCOFrequency(12000000);
@@ -168,7 +168,7 @@ void main(void)
 //        GPIO_setOutputLowOnPin(GPIO_PORT_P4, GPIO_PIN1);
 //        GPIO_setOutputHighOnPin(GPIO_PORT_P4, GPIO_PIN3);
         if(messageReceived == 1){
-             //printf("Received message: %s \n", dataString);
+//             printf("Received message: %s \n", dataString);
              process_controls(dataString);
              messageReceived = 0;
              dataString[0] = '\0';

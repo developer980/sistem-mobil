@@ -15,22 +15,20 @@ char *remove_first_character(char *control){
 }
 
 void initiate_movement(char *control){
-    char *speed = remove_first_character(remove_first_character(control));
+    char *speed = remove_first_character(control);
+    char com[1] = control[0];
 
     int speed_code = atoi(speed);
     int speed_value = speed_code * 30 + 3000;
 
-//    pwmConfigLeft.dutyCycle = speed_value;
-//    pwmConfigRight.dutyCycle = speed_value;
-//
-//    Timer_A_generatePWM(TIMER_A0_BASE, &pwmConfigLeft);
-//    Timer_A_generatePWM(TIMER_A0_BASE, &pwmConfigRight);
+//    printf("speed value %d", speed_value);
+
     Timer_A_setCompareValue(TIMER_A0_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_3, speed_value);
     Timer_A_setCompareValue(TIMER_A0_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_4, speed_value);
 
 
 
-    char com[1] = control[0];
+
     //printf("speed: %d \n", speed_value);
 
 
