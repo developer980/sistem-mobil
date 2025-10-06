@@ -2,8 +2,8 @@
 
 ## Scopul proiectului
 
-Scopul proiectului este de a studia posibile solutii pentru integrarea vehiculelor electrice în cât mai multe operațiuni utilitare (construcție, agricultura, minerit etc).
-Intenția este de a putea implica aceste vehicule in operațiuni desfășurate în zone izolate sau slab dezvoltate din punct de vedere al infrastrtucturii energetice.
+* Scopul proiectului este de a studia posibile solutii pentru integrarea vehiculelor electrice în cât mai multe operațiuni utilitare (construcție, agricultura, minerit etc).
+* Intenția este de a putea implica aceste vehicule in operațiuni desfășurate în zone izolate sau slab dezvoltate din punct de vedere al infrastrtucturii energetice.
 
 Acest lucru ar putea scoate în evitență avantajul implementării de vehicule electrice în vederea combaterii încălzirii globale.
 
@@ -15,3 +15,4 @@ Acest lucru ar putea scoate în evitență avantajul implementării de vehicule 
 
 ### Încărcarea bateriei vehiculului de test, de la vehiculul de alimentare
 ![WhatsApp Image 2025-10-07 at 01 07 31_b3de424e](https://github.com/user-attachments/assets/7d719a23-547b-4d57-a0ef-accb63a7864d)
+
