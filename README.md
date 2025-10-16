@@ -14,7 +14,7 @@ Proiectul a implicat construirea și programarea machetei a unui vehicul pentru 
 
 * Am folosit trei celule de litiu-ion de 3.7V pentru a asambla un acumulator de 12V
 * Acumulatorul a fost conectat prin intermediul unui BMS la sistemul vehiculului, pentru incarcarea de la panourile fotovoltaice si consum.
-<img width="1027" height="607" alt="image" src="https://github.com/user-attachments/assets/ece71b26-ea17-4506-b23b-33bd1b9b13b9" />
+<img width="1027" height="607" alt="image" src="https://github.com/user-attachments/assets/ece71b26-ea17-4506-b23b-33bd1b9b13b9" bg="white" />
 
 <img width="1056" height="826" alt="image" src="https://github.com/user-attachments/assets/857e9b0c-52d6-492f-9360-b858572b7edb" />
 
@@ -31,6 +31,7 @@ Proiectul a implicat construirea și programarea machetei a unui vehicul pentru 
 
 ### Încărcarea bateriei vehiculului de test, de la vehiculul de alimentare
 ![WhatsApp Image 2025-10-07 at 01 07 31_b3de424e](https://github.com/user-attachments/assets/7d719a23-547b-4d57-a0ef-accb63a7864d)
+
 
 
 
