@@ -16,7 +16,7 @@
 
 * The battery pack was connected to the vehicle system through a BMS, enabling charging from the photovoltaic panels and power supply to the vehicle’s components.
 
-<img width="645" height="402" alt="image" src="https://github.com/user-attachments/assets/e9646983-35a1-4cc7-8804-a6f2818496e7" />
+<img width="645" height="402" alt="image" margin="auto" src="https://github.com/user-attachments/assets/e9646983-35a1-4cc7-8804-a6f2818496e7" />
 <img width="724" height="569" alt="image" src="https://github.com/user-attachments/assets/ca2100ab-5960-4206-860f-aab99be8a98b" />
 
 
@@ -41,6 +41,7 @@
 
 ### Încărcarea bateriei vehiculului de test, de la vehiculul de alimentare
 ![WhatsApp Image 2025-10-07 at 01 07 31_b3de424e](https://github.com/user-attachments/assets/7d719a23-547b-4d57-a0ef-accb63a7864d)
+
 
 
 
