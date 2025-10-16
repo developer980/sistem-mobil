@@ -25,7 +25,7 @@
   
 <img width="674" height="501" alt="image" src="https://github.com/user-attachments/assets/b5e43e4a-448e-4b9d-a211-225762167861" />
 
-* For the communication module I used a NRF24L01+ wireless module controlled by an Arduino board via SPH protocol. The resulted module was connected to the main control board   
+* For the communication module I used a NRF24L01+ wireless module controlled by an Arduino board via SPH protocol. The communication with the main control board is made via UART. 
 <img width="530" height="614" alt="image" src="https://github.com/user-attachments/assets/c7b1137a-373e-4deb-80e0-4debf06c95ae" />
 
 * For the controll station I used another NRF24L01+ wirelwss module connected to an Arduino Mega board where I hosted a small server. The server was accessible from the PC trough ethernet via an ENC28J60 ethernet module.
@@ -41,6 +41,7 @@
 
 ### Încărcarea bateriei vehiculului de test, de la vehiculul de alimentare
 ![WhatsApp Image 2025-10-07 at 01 07 31_b3de424e](https://github.com/user-attachments/assets/7d719a23-547b-4d57-a0ef-accb63a7864d)
+
 
 
 
