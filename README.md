@@ -1,27 +1,39 @@
-﻿# Sistem de alimentare mobil destinat zonelor izolate
+<img width="261" height="81" alt="image" src="https://github.com/user-attachments/assets/a1db6186-8d0a-4fc5-ada6-b986618f19b7" />﻿
 
-## Scopul proiectului
+# Mobile power system for remote areas
 
-Scopul proiectului este de a studia posibile solutii pentru integrarea vehiculelor electrice în cât mai multe operațiuni utilitare (construcție, agricultura, minerit etc).
-  
-Intenția este de a putea implica aceste vehicule in operațiuni desfășurate în zone izolate sau slab dezvoltate din punct de vedere al infrastrtucturii energetice.
+## The project's purpose
 
-Acest lucru ar putea scoate în evitență avantajul implementării de vehicule electrice în vederea combaterii încălzirii globale.
+* The purpose of this project is to study possible solutions for integrating electric vehicles into a wide range of utility operations (construction, agriculture, mining, etc.).
 
-Proiectul a implicat construirea și programarea machetei a unui vehicul pentru încărcare, capabil să care baterii, panouri fotovoltaice și un port de încărcare. Acesta va servi ca și stație de alimentare mobilă facilitând încărcarea machetei altui vehicul de test.
+* The intention is to enable these vehicles to operate in remote or underdeveloped areas with limited energy infrastructure.
+
+* This approach could highlight the advantages of implementing electric vehicles as a means to combat global warming.
+
+* The project involved building and programming a model of a charging vehicle capable of carrying batteries, photovoltaic panels, and a charging port. This vehicle serves as a mobile power station, enabling the charging of another test vehicle model.
 
 ### Asamblarea bateriei
 
-* Am folosit trei celule de litiu-ion de 3.7V pentru a asambla un acumulator de 12V
-* Acumulatorul a fost conectat prin intermediul unui BMS la sistemul vehiculului, pentru incarcarea de la panourile fotovoltaice si consum.
-<img width="1027" height="607" alt="image" src="https://github.com/user-attachments/assets/ece71b26-ea17-4506-b23b-33bd1b9b13b9" bg="white" />
+* I used three 3.7V lithium-ion cells to assemble a 12V battery pack.
 
-<img width="1056" height="826" alt="image" src="https://github.com/user-attachments/assets/857e9b0c-52d6-492f-9360-b858572b7edb" />
+* The battery pack was connected to the vehicle system through a BMS, enabling charging from the photovoltaic panels and power supply to the vehicle’s components.
+
+<img width="645" height="402" alt="image" src="https://github.com/user-attachments/assets/e9646983-35a1-4cc7-8804-a6f2818496e7" />
+<img width="724" height="569" alt="image" src="https://github.com/user-attachments/assets/ca2100ab-5960-4206-860f-aab99be8a98b" />
+
 
 * Pentru controlul miscarii am utilizat o punte H L298N comandata prin intermediul semnalelor PWM.
+* Pentru programarea vehiculului, am folosit o placa de dezvoltare Texas Instruments, cu un micro-controller MSP-EXP432P401R, programat în C.
+  
+<img width="674" height="501" alt="image" src="https://github.com/user-attachments/assets/b5e43e4a-448e-4b9d-a211-225762167861" />
 
-<img width="989" height="734" alt="image" src="https://github.com/user-attachments/assets/d3817dbc-f227-4f10-876c-45986b01c80a" />
+* For the communication module I used a NRF24L01+ wireless module controlled by an Arduino board via SPH protocol. The resulted module was connected to the main control board   
+<img width="530" height="614" alt="image" src="https://github.com/user-attachments/assets/c7b1137a-373e-4deb-80e0-4debf06c95ae" />
 
+* For the controll station I used another NRF24L01+ wirelwss module connected to an Arduino Mega board where I hosted a small server. The server was accessible from the PC trough ethernet via an ENC28J60 ethernet module.
+  
+* The controls were sent via a user interface developed using HTML, CSS and JavaScript provided by a simple Python server responsible for communications between the user interface and the Arduino hosted server.
+<img width="473" height="441" alt="image" src="https://github.com/user-attachments/assets/ca096445-46d7-4838-99dd-ec7987893a6c" />
 
 ### Vehiculul de încărcare
 ![WhatsApp Image 2025-10-07 at 01 06 16_923d4431](https://github.com/user-attachments/assets/4d7e7d23-a5a9-4fc7-97b5-e802a245a98e)
@@ -31,6 +43,7 @@ Proiectul a implicat construirea și programarea machetei a unui vehicul pentru 
 
 ### Încărcarea bateriei vehiculului de test, de la vehiculul de alimentare
 ![WhatsApp Image 2025-10-07 at 01 07 31_b3de424e](https://github.com/user-attachments/assets/7d719a23-547b-4d57-a0ef-accb63a7864d)
+
 
 
 
