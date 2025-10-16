@@ -1,5 +1,3 @@
-<img width="261" height="81" alt="image" src="https://github.com/user-attachments/assets/a1db6186-8d0a-4fc5-ada6-b986618f19b7" />﻿
-
 # Mobile power system for remote areas
 
 ## The project's purpose
@@ -43,6 +41,7 @@
 
 ### Încărcarea bateriei vehiculului de test, de la vehiculul de alimentare
 ![WhatsApp Image 2025-10-07 at 01 07 31_b3de424e](https://github.com/user-attachments/assets/7d719a23-547b-4d57-a0ef-accb63a7864d)
+
 
 
 
