@@ -27,23 +27,6 @@ Timer_A_PWMConfig pwmConfigRight = {
     0
 };
 
-
-//Timer_A_PWMConfig pwmConfig = {
-//    TIMER_A_CLOCKSOURCE_SMCLK, // set timer source as SMCLK
-//    TIMER_A_CLOCKSOURCE_DIVIDER_64,
-//    10000,
-//    TIMER_A_CAPTURECOMPARE_REGISTER_1
-//    TIMER_A_OUTPUTMODE_RESET_SET,
-//    3300
-//};
-
-//uint_fast16_t clockSource;
-//uint_fast16_t clockSourceDivider;
-//   uint_fast16_t timerPeriod;
-//   uint_fast16_t compareRegister;
-//   uint_fast16_t compareOutputMode;
-//   uint_fast16_t dutyCycle;
-
 void init_io(){
 
 //    WDT_A->CTL = WDT_A_CTL_PW | WDT_A_CTL_HOLD;          // Stop watchdog timer
@@ -98,5 +81,6 @@ void init_PWM_pins(){
     Timer_A_generatePWM(TIMER_A0_BASE, &pwmConfigLeft);
     Timer_A_generatePWM(TIMER_A0_BASE, &pwmConfigRight);
 }
+
 
 
