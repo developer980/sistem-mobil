@@ -1,19 +1,15 @@
 #include "msp.h"
 #include "driverlib.h"
 #include "gpio.h"
-#include <string.h> // For strcpy, strlen
-#include <stdlib.h> // For malloc, free
+#include <string.h>
+#include <stdlib.h>
 
+// remove the first character from a string
 char *remove_first_character(char *control){
-//    int i = 0;
-//    while(control[i] != '\0'){
-//        control[i] = control[i + 1];
-//        i++;
-//    }
-
     return control + 1;
 }
 
+// initiate motor rotation direction and speed via PWM based on the received control
 void initiate_movement(char *control){
     char *speed = remove_first_character(control);
     char com[1] = control[0];
@@ -21,16 +17,8 @@ void initiate_movement(char *control){
     int speed_code = atoi(speed);
     int speed_value = speed_code * 30 + 3000;
 
-//    printf("speed value %d", speed_value);
-
     Timer_A_setCompareValue(TIMER_A0_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_3, speed_value);
     Timer_A_setCompareValue(TIMER_A0_BASE, TIMER_A_CAPTURECOMPARE_REGISTER_4, speed_value);
-
-
-
-
-    //printf("speed: %d \n", speed_value);
-
 
     switch (atoi(com)){
         case 0:
@@ -51,6 +39,7 @@ void initiate_movement(char *control){
     }
 }
 
+// activate the charging port for other vehicles
 void initiate_vehicle_charge_control(char *control){
     char *charge_control_char = remove_first_character(remove_first_character(control));
     int charge_control_code = atoi(charge_control_char);
@@ -64,21 +53,36 @@ void initiate_vehicle_charge_control(char *control){
     }
 }
 
-void process_controls(char string[6]){
+// activate the charging process for the charging vehicle
+void initiate_solar_charge_control(char *control){
+    char *charge_control_char = remove_first_character(remove_first_character(control));
+    int charge_control_code = atoi(charge_control_char);
+
+    if (charge_control_code == 0){
+        stop_solar_charging();
+    }
+
+    if(charge_control_code == 1){
+        start_solar_charging();
+    }
+}
+
+// select the process based on the received control
+void process_controls(char *string){
     const char com[1] = string[0];
+
     switch (atoi(com)){
         case 0:
 //            printf("do nothing");
             break;
         case 1:
-//            printf("move");
             initiate_movement(remove_first_character(string));
             break;
         case 2:
             initiate_vehicle_charge_control(remove_first_character(string));
             break;
         case 3:
-//            printf("vehicle charge control");
+            initiate_solar_charge_control(remove_first_character(string));
             break;
     }
 }
