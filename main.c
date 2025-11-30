@@ -7,21 +7,14 @@
 #include "msp.h"
 #include "driverlib.h"
 #include <adc14.h>
+//#include "nrf24l01.h"
 
 const int max_period = 1000;
-int cl0 = 0, cl1 = 0;
-int limit = 1000;
-int leftButtonPressed = 0;
-int rightButtonPressed = 0;
-uint8_t ascending_number = 0X01;
 char dataString[6];
 volatile uint8_t dataIndex = 0;
 volatile uint8_t messageReceived = 0;
 
-uint8_t property[4];
-int receivedInteger;
-
-
+// Detect if a string contains white spaces
 int includesWhiteSpaces(char string[6]){
     if(string[0] == '\0'){
         return 1;
@@ -36,7 +29,7 @@ int includesWhiteSpaces(char string[6]){
     return 0;
 }
 
-
+// Inrerrupt handler function for UART signals
 void EUSCIA0_IRQHandler(void){
     uint32_t status = UART_getEnabledInterruptStatus(EUSCI_A0_BASE);
 
@@ -51,20 +44,19 @@ void EUSCIA0_IRQHandler(void){
                 dataString[dataIndex++] = dataSection;
             }
         } else if(dataIndex >= 5 || dataSection == '\n') {
-            dataString[dataIndex] = '\0'; // Null terminate
+            dataString[dataIndex] = '\0';
             if(!includesWhiteSpaces(dataString)){
                 messageReceived = 1;
             }
 
-//            printf("DataString: %s \n", dataString);
             dataIndex = 0;
         }
     }
 }
 
+// main function
 void main(void)
 {
-
     WDT_A_hold(WDT_A_BASE);  // Stop watchdog timer
 
     init_io();
@@ -81,20 +73,18 @@ void main(void)
         GPIO_PIN2 | GPIO_PIN3, GPIO_PRIMARY_MODULE_FUNCTION);
 
 
-    // UART Configuration
+    // UART Configuration (9600 baud @12MHz)
     eUSCI_UART_Config uartConfig = {
-        EUSCI_A_UART_CLOCKSOURCE_SMCLK,     // SMCLK Clock Source
-        78,                                   //(9600 baud @12MHz)
-        2,                                   // UCxBRF = 2
-        0x20,                                // UCxBRS = 0x20
-        EUSCI_A_UART_NO_PARITY,              // No Parity
-        EUSCI_A_UART_LSB_FIRST,              // LSB First
-        EUSCI_A_UART_ONE_STOP_BIT,           // One stop bit
-        EUSCI_A_UART_MODE,                   // UART mode
+        EUSCI_A_UART_CLOCKSOURCE_SMCLK,               // SMCLK Clock Source
+        78,
+        2,                                            // UCxBRF = 2
+        0x20,                                         // UCxBRS = 0x20
+        EUSCI_A_UART_NO_PARITY,                       // No Parity
+        EUSCI_A_UART_LSB_FIRST,                       // LSB First
+        EUSCI_A_UART_ONE_STOP_BIT,                    // One stop bit
+        EUSCI_A_UART_MODE,                            // UART mode
         EUSCI_A_UART_OVERSAMPLING_BAUDRATE_GENERATION // Oversampling
     };
-
-
 
     // Initialize and enable UART
     UART_initModule(EUSCI_A0_BASE, &uartConfig);
@@ -103,8 +93,10 @@ void main(void)
     UART_enableInterrupt(EUSCI_A0_BASE, EUSCI_A_UART_RECEIVE_INTERRUPT);
     Interrupt_enableInterrupt(INT_EUSCIA0);
     Interrupt_enableMaster();
-    
+
+    // main loop
     while(1){
+        // Process the controls once a message has been received
         if(messageReceived == 1){
              process_controls(dataString);
              messageReceived = 0;
@@ -112,7 +104,6 @@ void main(void)
          }
     }
 }
-
 void UARTSendChar(char c) {
     while (!(EUSCI_A0->IFG & EUSCI_A_IFG_TXIFG));
     MAP_UART_transmitData(EUSCI_A0_BASE, (uint8_t)c);
